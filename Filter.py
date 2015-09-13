@@ -42,14 +42,12 @@ import sys
 
 def split_input(file, time_code_len):
     """
-    Splits file input into four lists, the 9x commands, the 55 commands, and a combined 9x
-        55 commands that also includes timestamps, and a list of error commands.
+    Splits file input into three lists, the 9x commands, the 55 commands, and a list of error commands.
     :param file String Filename
     :param time_code_len Number of timestamp blocks before the actual code.
-    :return: [][]String Four lists of strings that contain the combined 9x and 55 commands,
-                        the 9X commands, and the 55 commands, and a list of error commands.
+    :return: [][]String Three lists of strings that contain the 9X commands, and the 55 commands, and a list of error
+    commands.
     """
-    command95 = list()
     command9 = list()
     command5 = list()
     recording_errors = list()
@@ -63,8 +61,7 @@ def split_input(file, time_code_len):
                 command9.append(file_line)
             if file_line[time_code_len][0] == '5':
                 command5.append(file_line)
-            command95.append(file_line)
-    return command95, command9, command5, recording_errors
+    return command9, command5, recording_errors
 
 
 def check_command(command):
@@ -128,8 +125,8 @@ def save_list(command_list, type_of_command, file_name, file_name_tail_to_remove
 
 
 def main(file_name, time_code_len):
-    commands95, commands9, commands55, errors = split_input(file_name, time_code_len)
-    save_list(commands95, '9X_And_55', file_name)
+    commands9, commands55, errors = split_input(file_name, time_code_len)
+    save_list(commands9+commands55, '9X_And_55', file_name)
     save_list(commands9, '9X', file_name)
     save_list(commands55, '55', file_name)
     commands55 = remove_repeats55(commands55, time_code_len)
