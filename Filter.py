@@ -4,7 +4,7 @@ splits commands into different files.
     - List with timestamps of only 9X commands.
     - List with timestamps of only 55 commands.
     - List with timestamps of both 9X and 55 commands.
-    - List with no timestamps of only unique 9X commands, ommiting delays and some 0C codes.
+    - List with no timestamps of only unique 9X commands, omitting delays and some 0C codes.
     - List with no timestamps of only unique 55 commands.
     - List of commands that didn't pass 55 or 9X CRC, likely from transmission errors or collisions.
 
@@ -36,8 +36,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-import GwtSUtils
 import sys
+
+import GwtSUtils
 
 
 def split_input(file, time_code_len):
@@ -69,6 +70,8 @@ def check_command(command):
     :param command []String 9X or 55 command
     :return Boolean True if it's a correct command and False if not.
     """
+    if len(command) < 5:
+        return False
     if command[0][0] == '9':
         calculated_command = GwtSUtils.int_array_to_hex_str(GwtSUtils.encode9x(' '.join(command[1:-1])))
     elif command[0][0] == '5':
@@ -116,7 +119,7 @@ def encode9x(command):
 
 
 def save_list(command_list, type_of_command, file_name, file_name_tail_to_remove=4):
-    with open(file_name[:-file_name_tail_to_remove]+'_'+type_of_command+'.txt', 'w') as output:
+    with open(file_name[:-file_name_tail_to_remove] + '_' + type_of_command + '.txt', 'w') as output:
         for line in sorted(command_list):
             if type(line) is str:
                 output.write(line + '\n')
@@ -126,7 +129,7 @@ def save_list(command_list, type_of_command, file_name, file_name_tail_to_remove
 
 def main(file_name, time_code_len):
     commands9, commands55, errors = split_input(file_name, time_code_len)
-    save_list(commands9+commands55, '9X_And_55', file_name)
+    save_list(commands9 + commands55, '9X_And_55', file_name)
     save_list(commands9, '9X', file_name)
     save_list(commands55, '55', file_name)
     commands55 = remove_repeats55(commands55, time_code_len)
@@ -136,7 +139,7 @@ def main(file_name, time_code_len):
     save_list(errors, 'Errors', file_name)
     # Uncomment below to show lines that didn't pass any kind of CRC in order of how frequent they appeared.
     # I typically keep it low (around 10) to pick up any possible commands we're not scanning for normally
-    # but are broadcasted multiple times but it's usually just command collisions and transmission errors.
+    # but are broadcast multiple times but it's usually just command collisions and transmission errors.
     '''
     from collections import Counter
     num_of_items_to_show = 10
