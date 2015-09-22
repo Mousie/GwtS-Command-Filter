@@ -10,7 +10,8 @@ splits commands into different files.
     - List with no timestamps of only unique 55 commands.
     - List of commands that didn't pass 55 or 9X CRC, likely from transmission errors or collisions.
 
-Version: 2015-09-07
+Version: 2015-09-22
+
 Use:
 
     python Filter.py input_file_name #of_timestamp_pieces
