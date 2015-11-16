@@ -23,8 +23,6 @@ Example:
     of pieces where time codes occur (in this case it's 2, 2015-08-30 15:34:20.250)
     before the actual commands occur.
 
-MousieMagic@gmail.com
-
 
 
 This program is free software: you can redistribute it and/or modify
