@@ -1,7 +1,6 @@
 """
 GwtS Utilities for calculating 9X commands, 55 commands, IR timings, and sequencing of commands.
 
-MousieMagic@gmail.com
 
 Version: 2015-09-06
 
