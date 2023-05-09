@@ -1,4 +1,4 @@
-# GwtSFilter
+# GwtS Recording Filter
 
 Filter for GwtS recordings. Checks to make sure all commands are correct and
 splits commands into different files.
